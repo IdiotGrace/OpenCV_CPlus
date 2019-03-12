@@ -29,9 +29,10 @@ int PlayVideo(string video_path){
     }
     return 0;
 }
-    
+/*
 int main(int argc, const char * argv[]) {
     string video_path = "file/meeting.mp4";
     int return_value = PlayVideo(video_path);
     return return_value;
 }
+ */
