@@ -33,6 +33,33 @@ int main(int argc, const char * argv[]) {
     cout << "Video has " << frames << " frames of dimensions(" << tmpw << ", "<< tmph << ")." << endl;
     
     cv::createTrackbar("Position", "Example2_4", &g_slider_position, frames, onTrackbarSlide);
+    cv::Mat frame;
+    for(;;){
+        if(g_run != 0){
+            g_cap >> frame;
+            if(frame.empty())
+                break;
+            int current_pos = (int)g_cap.get(cv::CAP_PROP_POS_FRAMES);
+            g_dontset = 1;
+            
+            cv::setTrackbarPos("Position", "Example2_4", current_pos);
+            cv::imshow("Example2_4", frame);
+            
+            g_run -= 1;
+        }
+        
+        char c = (char)cv::waitKey(0);
+        if(c == 's'){//single step
+            g_run = 1;
+            cout << "Single step, run = " << g_run << endl;
+        }else if(c == 'r'){//run mode
+            g_run = -1;
+            cout << "Run mode, run = " << g_run << endl;
+        }else if(c == 27){
+            break;
+        }
+        return(0);
+    }
 
 }
 
