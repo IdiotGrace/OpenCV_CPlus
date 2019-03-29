@@ -18,16 +18,15 @@ cv::VideoCapture g_cap;
 
 void onTrackbarSlide(int pos, void *){
     g_cap.set(cv::CAP_PROP_POS_FRAMES, pos);
-    if(!g_dontset){
+    if(!g_dontset)
         g_run = 1;
-        g_dontset = 0;
-    }
+    g_dontset = 0;
 }
-
+/*
 int main(int argc, const char * argv[]) {
     cv::namedWindow("Video_jump_example", cv::WINDOW_AUTOSIZE);
     g_cap.open("file/meeting.mp4");
-    int frames = (int) g_cap.get(cv::CAP_PROP_FRAME_COUNT);
+    int frames = (int)g_cap.get(cv::CAP_PROP_FRAME_COUNT);
     int tmpw = (int)g_cap.get(cv::CAP_PROP_FRAME_WIDTH);
     int tmph = (int)g_cap.get(cv::CAP_PROP_FRAME_HEIGHT);
     cout << "Video has " << frames << " frames of dimensions(" << tmpw << ", "<< tmph << ")." << endl;
@@ -37,7 +36,7 @@ int main(int argc, const char * argv[]) {
     for(;;){
         if(g_run != 0){
             g_cap >> frame;
-            if(frame.empty())
+            if(!frame.data)
                 break;
             int current_pos = (int)g_cap.get(cv::CAP_PROP_POS_FRAMES);
             g_dontset = 1;
@@ -52,15 +51,16 @@ int main(int argc, const char * argv[]) {
         if(c == 's'){//single step
             g_run = 1;
             cout << "Single step, run = " << g_run << endl;
-        }else if(c == 'r'){//run mode
+        }
+        if(c == 'r'){//run mode
             g_run = -1;
             cout << "Run mode, run = " << g_run << endl;
-        }else if(c == 27){
-            break;
         }
-        return(0);
+        if(c == 27)
+            break;
     }
+        return(0);
 
-}
+}*/
 
 
