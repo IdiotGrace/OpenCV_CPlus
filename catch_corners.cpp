@@ -29,13 +29,13 @@ int main()
     const int nRows = srcImg.rows;
     const int nCols = srcImg.cols;
     cout << "Rows = " << nRows << "; Cols = " << nCols << ";" << endl;
-    DrawLine(srcImg, Point(0, nRows), Point(nCols/2, nRows-nCols/2));
+ // DrawLine(srcImg, Point(0, nRows), Point(nCols/2, nRows-nCols/2));
     
     //白点个数
     int nCount = 0;
     //存储白点坐标
-    int** white;
-    //将黑白图的白色像素点坐标值输出
+    int white[nCols][nRows];
+    //将黑白图的白色像素点坐标值记录，输出
     for(int c = 0; c < nCols; c++){
         for(int r = 0; r < nRows; r++){
             if(srcImg.at<uchar>(r, c)==255){
@@ -48,26 +48,51 @@ int main()
         }
     }
     cout << "ncount" << nCount << endl;
-
-    //纯蓝点个数
-    int nPureCount = 0;
-    //存储蓝点坐标
-    int** blue;
-    //将图中所有的纯蓝色像素点坐标值输出
+   /*
     for(int c = 0; c < nCols; c++){
+        delete []white[c];
+        white = NULL;
+    }
+    */
+    
+   
+    //纯蓝点个数
+//    int nPureCount = 0;
+    //存储蓝点坐标
+//   int** blue;
+    //将图中所有的纯蓝色像素点坐标值输出
+    /*
+    for(int c = 0; c < nCols/2; c++){
         for(int r = 0; r < nRows; r++){
             if(srcImg.at<Vec3b>(r, c)[0]==255 & srcImg.at<Vec3b>(r, c)[1]==0 & srcImg.at<Vec3b>(r, c)[2]==0){
                 cout << "[" << c << "," << r << "]";
-                blue[c][r] = 1;
+          //      blue[c][r] = 1;
                 nPureCount++;
             }else{
-                blue[c][r] = 0;
+             //   blue[c][r] = 0;
             }
         }
     }
     cout << "nPureCount" << nPureCount << endl;
+    */
     
     //判断蓝点集合中是否有点和白点重合，若有，退出循环，记下坐标。
+    
+    while(true){
+        int delta = 0;
+        DrawLine(srcImg, Point(0, nRows+delta), Point(nCols/2, nRows-nCols/2+delta));
+        for(int c = 0; c < nCols/2; c++){
+            for(int r = 0; r < nRows; r++){
+                if(srcImg.at<Vec3b>(r, c)[0]==255 & srcImg.at<Vec3b>(r, c)[1]==0 & srcImg.at<Vec3b>(r, c)[2]==0 & white[r][c]==1){
+                    cout << "Find it: [" << c << "," << r << "]";
+                    break;
+                }else{
+                    cout << "Keep finding, delta = " << delta << ";";
+                }
+            }
+        }
+        delta++;
+    }
     
     imshow("src", srcImg);
     imwrite("file/result.jpg", srcImg);
